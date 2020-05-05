@@ -1,0 +1,19 @@
+create table empresa(
+	id_empresa serial primary key not null,
+	nome_empresa varchar(255) not null unique,
+	cnpj varchar(255) not null unique,
+	responsavel varchar(200),
+	desde_ano integer,
+	descricao varchar(300)
+);
+
+create table produto(
+	id_produto serial primary key not null,
+	id_empresa integer,
+	nome_produto varchar(255) not null,
+	valor decimal(9,2) not null
+);
+
+--FOI USADO O 'on delete cascade' PARA QUE QUANDO FOR EXCLUIDO ALGUM REGISTRO NA TABELA EMPRESA, NA TABELA PRODUTO TAMBÉM SERÁ EXCLUIDO 
+--O REGISTRO QUE CONTENHA O MESMO ID DE RELACÃO.
+alter table produto add constraint empresa_fk foreign key (id_empresa) references empresa(id_empresa) on delete cascade;
